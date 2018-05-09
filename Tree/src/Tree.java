@@ -1,45 +1,41 @@
 import java.util.Scanner;
 
-class TreeNode{
-	int data;
-	TreeNode left, right, adjLeft, adjRight;
-	
-	public TreeNode(int value) {
-		data = value;
-		left = right = adjLeft = adjRight = null;
-	}
-} 
 public class Tree {
-	TreeNode root;
+	static int treeHeight;
+	static int tempVar = 1;
 
-	public static void main(String[] args) {
-		int treeHeight;
+	public static void main(String[] args) {		
 		System.out.println("Specify the height of the tree:");
 		Scanner s = new Scanner(System.in);
 		treeHeight = s.nextInt();
 		if(treeHeight == 0) {		
 			System.out.println("Invalid height");
 		}else {
-			generateTree(treeHeight);
+			printTree(treeHeight);
 		}		
 	}
-	
-	static void generateTree(int height) {
-		int temp = 1;
-		Tree tree = new Tree();
-		if(height == 1) {
-			tree.root=new TreeNode(1);
-			return;
-		}
-		if(!(temp>height)) {
-			
-		}
-	}
-	void adjNodes(TreeNode p) {
-		if(p==null) {
-			return;
-		}
-		
-	}
+	public static void printTree(int desiredHeight){
+        int[] elements = {1};
+        int currentHeight = 0;
+        while(currentHeight < desiredHeight) {
+            int[] nextElements = new int[2*elements.length];
+            printLevel(elements);
+            for(int i = 0; i < elements.length; ++i) {
+                //Left child node
+                nextElements[i*2] = (i == 0) ? 1 : elements[i-1] + elements[i];
+                //Right child node
+                nextElements[i*2 + 1] = (i == (elements.length - 1)) ? 1 : elements[i] + elements[i+1];
+            }
+            elements = nextElements;
+            currentHeight++;
+        }
+    }
+
+    public static void printLevel(int[] list){
+        for(int i = 0; i < list.length; ++i) {
+            System.out.print(list[i] + " ");
+         }
+        System.out.println("");
+    }
 	
 }
